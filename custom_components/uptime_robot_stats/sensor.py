@@ -16,7 +16,7 @@ from homeassistant.components.sensor import (
     SensorDeviceClass
 )
 
-SCAN_INTERVAL = timedelta(seconds=150)
+#SCAN_INTERVAL = timedelta(seconds=150)
 
 BASE_URL = "https://api.uptimerobot.com/v2/getMonitors"
 
