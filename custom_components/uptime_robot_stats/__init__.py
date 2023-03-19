@@ -1,6 +1,7 @@
 """The uptime_robot component."""
 DOMAIN = "uptime_robot_stats"
 CONF_API_KEY = "api_key"
+CONF_DEVICE_ID = "monitors"
 
 async def async_setup(hass, config):
     """Set up the uptime_robot component."""
