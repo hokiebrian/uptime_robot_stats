@@ -1,0 +1,10 @@
+{
+    "domain": "uptime_robot_stats",
+    "name": "Uptime Robot Monitor Stats",
+    "config_flow": true,
+    "documentation": "https://github.com/hokiebrian/uptime_robot_stats",
+    "requirements": [],
+    "dependencies": [],
+    "codeowners": ["@hokiebrian"],
+    "version": "0.1.0"
+  }
