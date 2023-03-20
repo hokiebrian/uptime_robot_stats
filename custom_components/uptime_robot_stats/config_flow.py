@@ -5,7 +5,6 @@ import homeassistant.helpers.config_validation as cv
 
 from . import DOMAIN
 
-
 class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Uptime Robot configuration flow."""
 

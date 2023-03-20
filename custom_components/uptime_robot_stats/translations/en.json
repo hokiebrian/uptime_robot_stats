@@ -27,7 +27,9 @@
             "description": "Enter your Uptime Robot Data to continue.",
             "description_placeholders": {
                 "api_key_label": "{{ name('uptime_robot_stats.api_key') }}",
-                "api_key_description": "{{ description('uptime_robot_stats.api_key') }}"
+                "api_key_description": "{{ description('uptime_robot_stats.api_key') }}",
+                "monitors_label": "{{ name('uptime_robot_stats.monitors') }}",
+                "monitors_description": "{{ description('uptime_robot_stats.monitors') }}"
             }
         }
     }
