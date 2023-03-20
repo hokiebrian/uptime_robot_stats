@@ -1,35 +1,12 @@
 {
     "config": {
-        "uptime_robot_stats": {
-            "api_key": {
-                "name": "API key",
-                "description": "Enter your Uptime Robot API key."
-            },
-            "monitors": {
-                "name": "Monitor ID",
-                "description": "Enter your Monitor ID."
-            }
-        }
-    },
-    "step": {
-        "user": {
-            "title": "Uptime Robot",
-            "data_schema": {
-                "api_key": {
-                    "type": "string",
-                    "required": true
-                },
-                "monitors": {
-                    "type": "string",
-                    "required": true
+        "step": {
+            "user": {
+                "data": {
+                    "api_key": "Uptime Robot API Key",
+                    "monitors": "Uptime Robot Monitor ID"
+
                 }
-            },
-            "description": "Enter your Uptime Robot Data to continue.",
-            "description_placeholders": {
-                "api_key_label": "{{ name('uptime_robot_stats.api_key') }}",
-                "api_key_description": "{{ description('uptime_robot_stats.api_key') }}",
-                "monitors_label": "{{ name('uptime_robot_stats.monitors') }}",
-                "monitors_description": "{{ description('uptime_robot_stats.monitors') }}"
             }
         }
     }
