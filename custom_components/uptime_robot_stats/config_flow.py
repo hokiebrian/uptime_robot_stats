@@ -28,8 +28,3 @@ class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             errors=errors,
         )
 
-
-
-#    async def async_step_hass_config(self, user_input=None):
-#        """Handle a Home Assistant configuration request."""
-#        return await self.async_step_user(user_input)

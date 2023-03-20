@@ -6,39 +6,21 @@ import asyncio
 
 from typing import Any, Dict, Optional
 
-from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity
+from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity, SensorStateClass, SensorDeviceClass
 from homeassistant.const import CONF_API_KEY, CONF_DEVICE_ID
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
-
-from homeassistant.components.sensor import (
-    SensorStateClass,
-    SensorDeviceClass
-)
 
 #SCAN_INTERVAL = timedelta(seconds=150)
 
 BASE_URL = "https://api.uptimerobot.com/v2/getMonitors"
 
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
-    {
-        vol.Required(CONF_API_KEY): cv.string,
-        vol.Required(CONF_DEVICE_ID): cv.string,
-    }
-)
-
-
-#async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
- #   """Set up the Uptime Robot sensor."""
- #   sensors = []
- #   for monitor in config:
- #       api_key = monitor[CONF_API_KEY]
- #       monitors = monitor[CONF_DEVICE_ID]
- #       sensor = UptimeRobotSensor(api_key, monitors)
- #       sensors.append(sensor)
-
- #   async_add_entities(sensors)
-
+#PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
+#    {
+#        vol.Required(CONF_API_KEY): cv.string,
+#        vol.Required(CONF_DEVICE_ID): cv.string,
+#    }
+#)
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up the Uptime Robot sensor from a config entry."""
