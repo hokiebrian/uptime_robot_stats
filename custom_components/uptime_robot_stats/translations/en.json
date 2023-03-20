@@ -13,11 +13,11 @@
     "options": {
         "step": {
             "init": {
-                "title": "Uptime Robot Monitor Stats",
-                "description": "Enter your Uptime Robot API Key and Monitor ID",
+                "title": "Uptime Robot Monitor Stats options",
+                "description": "opt Enter your Uptime Robot API Key and Monitor ID",
                 "data": {
-                    "api_key": "Uptime Robot API Key",
-                    "monitors": "Uptime Robot Monitor ID"
+                    "api_key": "opt Uptime Robot API Key",
+                    "monitors": "opt Uptime Robot Monitor ID"
                 }
             }
         }  
