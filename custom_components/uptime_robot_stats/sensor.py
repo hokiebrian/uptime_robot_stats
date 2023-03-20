@@ -11,7 +11,7 @@ from homeassistant.const import CONF_API_KEY, CONF_DEVICE_ID
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 
-#SCAN_INTERVAL = timedelta(seconds=150)
+SCAN_INTERVAL = timedelta(seconds=120)
 
 BASE_URL = "https://api.uptimerobot.com/v2/getMonitors"
 
@@ -45,16 +45,6 @@ class UptimeRobotSensor(SensorEntity):
     def state(self) -> Optional[float]:
         """Return the state of the sensor."""
         return self._state
-
- #   @property
- #   def unit_of_measurement(self) -> str:
- #       """Return the unit of measurement."""
- #       return "ms"
-
- #   @property
- #   def state_class(self):
- #       """Return the state class of the sensor."""
- #       return SensorStateClass.MEASUREMENT
 
     @property
     def unique_id(self):
