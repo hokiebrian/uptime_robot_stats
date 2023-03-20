@@ -28,16 +28,16 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    """Set up the Uptime Robot sensor."""
-    sensors = []
-    for monitor in config:
-        api_key = monitor[CONF_API_KEY]
-        monitors = monitor[CONF_DEVICE_ID]
-        sensor = UptimeRobotSensor(api_key, monitors)
-        sensors.append(sensor)
+#async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
+ #   """Set up the Uptime Robot sensor."""
+ #   sensors = []
+ #   for monitor in config:
+ #       api_key = monitor[CONF_API_KEY]
+ #       monitors = monitor[CONF_DEVICE_ID]
+ #       sensor = UptimeRobotSensor(api_key, monitors)
+ #       sensors.append(sensor)
 
-    async_add_entities(sensors)
+ #   async_add_entities(sensors)
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
@@ -45,7 +45,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     api_key = config_entry.data[CONF_API_KEY]
     monitors = config_entry.data[CONF_DEVICE_ID]
     sensor = UptimeRobotSensor(api_key, monitors)
-    async_add_entities([sensor])
+    async_add_entities([sensor], True)
 
 
 class UptimeRobotSensor(SensorEntity):

@@ -10,22 +10,25 @@ class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Uptime Robot configuration flow."""
 
     async def async_step_user(self, user_input=None):
-        """Handle a flow start."""
-        if user_input is None:
-            return self.async_show_form(
-                step_id="user",
-                data_schema=vol.Schema(
-                    {
-                        vol.Required(CONF_API_KEY): str,
-                        vol.Required(CONF_DEVICE_ID): str,
-                    }
-                ),
-            )
+        errors = {}
 
-        return self.async_create_entry(
-            title=user_input[CONF_DEVICE_ID],
-            data=user_input,
+        if user_input is not None:
+            return self.async_create_entry(
+                title=user_input[CONF_DEVICE_ID],
+                data=user_input,
         )
+        return self.async_show_form(
+            step_id="user",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(CONF_API_KEY): str,
+                    vol.Required(CONF_DEVICE_ID): str,
+                }
+            ),
+            errors=errors,
+        )
+
+
 
 #    async def async_step_hass_config(self, user_input=None):
 #        """Handle a Home Assistant configuration request."""
