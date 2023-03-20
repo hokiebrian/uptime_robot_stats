@@ -3,7 +3,7 @@ from homeassistant import config_entries
 from homeassistant.const import CONF_API_KEY, CONF_DEVICE_ID
 import homeassistant.helpers.config_validation as cv
 
-from .const import DOMAIN
+from . import DOMAIN
 
 
 class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
