@@ -15,13 +15,6 @@ import voluptuous as vol
 
 BASE_URL = "https://api.uptimerobot.com/v2/getMonitors"
 
-#PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
-#    {
-#        vol.Required(CONF_API_KEY): cv.string,
-#        vol.Required(CONF_DEVICE_ID): cv.string,
-#    }
-#)
-
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up the Uptime Robot sensor from a config entry."""
     api_key = config_entry.data[CONF_API_KEY]
@@ -29,9 +22,12 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     sensor = UptimeRobotSensor(api_key, monitors)
     async_add_entities([sensor], True)
 
-
 class UptimeRobotSensor(SensorEntity):
     """Representation of an Uptime Robot sensor."""
+
+    _attr_icon = "mdi:clock"
+    _attr_native_unit_of_measurement = "ms"
+    _attr_state_class: SensorStateClass = SensorStateClass.MEASUREMENT
 
     def __init__(self, api_key: str, monitors: str) -> None:
         """Initialize the sensor."""
@@ -50,19 +46,19 @@ class UptimeRobotSensor(SensorEntity):
         """Return the state of the sensor."""
         return self._state
 
-    @property
-    def unit_of_measurement(self) -> str:
-        """Return the unit of measurement."""
-        return "ms"
+ #   @property
+ #   def unit_of_measurement(self) -> str:
+ #       """Return the unit of measurement."""
+ #       return "ms"
 
-    @property
-    def state_class(self):
-        """Return the state class of the sensor."""
-        return SensorStateClass.MEASUREMENT
+ #   @property
+ #   def state_class(self):
+ #       """Return the state class of the sensor."""
+ #       return SensorStateClass.MEASUREMENT
 
     @property
     def unique_id(self):
-        return "bv-asdasd-123123r5"
+        return monitors
 
     @property
     def extra_state_attributes(self) -> Optional[Dict[str, Any]]:
