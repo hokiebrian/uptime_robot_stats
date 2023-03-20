@@ -58,7 +58,7 @@ class UptimeRobotSensor(SensorEntity):
 
     @property
     def unique_id(self):
-        return monitors
+        return "uptime" + self._monitors
 
     @property
     def extra_state_attributes(self) -> Optional[Dict[str, Any]]:
