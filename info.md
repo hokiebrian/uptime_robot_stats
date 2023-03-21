@@ -13,9 +13,9 @@ This provides statistics for a single Uptime Robot Monitor. You will need an API
 
 1) Make sure that [Home Assistant Community Store (HACS)](https://github.com/custom-components/hacs) is setup.
 2) Go to integrations in HACS
-3) click the 3 dots in the top right corner and choose `custom repositories`
-4) paste the following into the repository input field `https://github.com/hokiebrian/uptime_robot_stats` and choose category of `Integration`
-5) click add and restart HA to let the integration load
+3) Click the 3 dots in the top right corner and choose `Custom repositories`
+4) Paste the following into the repository input field `https://github.com/hokiebrian/uptime_robot_stats` and choose category of `Integration`
+5) Click add and restart HA to let the integration load
 6) Go to settings and choose `Devices & Services`
 7) Click `Add Integration` and search for `Uptime Robot Monitor Stats`
 8) Configure the integration by copying your API Key on the top line and your Monitor ID on the bottom line when prompted
