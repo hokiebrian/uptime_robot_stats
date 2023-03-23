@@ -65,8 +65,27 @@ class UptimeRobotSensor(SensorEntity):
         }
 
         async with aiohttp.ClientSession(headers=headers) as session:
-            async with session.post(BASE_URL, data=payload, timeout=30) as response:
-                if response.status != 200:
+            try:
+                async with session.post(BASE_URL, data=payload, timeout=30) as response:
+                    if response.status != 200:
+                        self._state = float(0)
+                        self._extra_attributes = {
+                            "response_time": float(0),
+                            "response_avg": float(0),
+                            "uptime_percent_24h": float(100),
+                            "uptime_percent_all_time": float(100),
+                        }
+                        return
+
+                    data = await response.json()
+                    self._state = float(data["monitors"][0]["response_times"][0]["value"])
+                    self._extra_attributes = {
+                        "response_time": float(data["monitors"][0]["response_times"][0]["value"]),
+                        "response_avg": float(data["monitors"][0]["average_response_time"]),
+                        "uptime_percent_24h": float(data["monitors"][0]["custom_uptime_ratio"]),
+                        "uptime_percent_all_time": float(data["monitors"][0]["all_time_uptime_ratio"]),
+                    }
+            except:
                     self._state = float(0)
                     self._extra_attributes = {
                         "response_time": float(0),
@@ -74,13 +93,3 @@ class UptimeRobotSensor(SensorEntity):
                         "uptime_percent_24h": float(100),
                         "uptime_percent_all_time": float(100),
                     }
-                    return
-
-                data = await response.json()
-                self._state = float(data["monitors"][0]["response_times"][0]["value"])
-                self._extra_attributes = {
-                    "response_time": float(data["monitors"][0]["response_times"][0]["value"]),
-                    "response_avg": float(data["monitors"][0]["average_response_time"]),
-                    "uptime_percent_24h": float(data["monitors"][0]["custom_uptime_ratio"]),
-                    "uptime_percent_all_time": float(data["monitors"][0]["all_time_uptime_ratio"]),
-                }
