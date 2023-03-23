@@ -18,8 +18,8 @@ BASE_URL = "https://api.uptimerobot.com/v2/getMonitors"
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up the Uptime Robot sensor from a config entry."""
     api_key = config_entry.data[CONF_API_KEY]
-    monitors = config_entry.data[CONF_DEVICE_ID]
-    sensor = UptimeRobotSensor(api_key, monitors)
+    device_id = config_entry.data[CONF_DEVICE_ID]
+    sensor = UptimeRobotSensor(api_key, device_id)
     async_add_entities([sensor], True)
 
 class UptimeRobotSensor(SensorEntity):
@@ -29,10 +29,10 @@ class UptimeRobotSensor(SensorEntity):
     _attr_native_unit_of_measurement = "ms"
     _attr_state_class: SensorStateClass = SensorStateClass.MEASUREMENT
 
-    def __init__(self, api_key: str, monitors: str) -> None:
+    def __init__(self, api_key: str, device_id: str) -> None:
         """Initialize the sensor."""
         self._api_key = api_key
-        self._monitors = monitors
+        self._device_id = device_id
         self._state: Optional[float] = None
         self._extra_attributes: Dict[str, Any] = {}
 
@@ -48,7 +48,7 @@ class UptimeRobotSensor(SensorEntity):
 
     @property
     def unique_id(self):
-        return "uptime" + self._monitors
+        return "uptime" + self._device_id
 
     @property
     def extra_state_attributes(self) -> Optional[Dict[str, Any]]:
@@ -58,7 +58,7 @@ class UptimeRobotSensor(SensorEntity):
     async def async_update(self) -> None:
         """Fetch new state data for the sensor."""
         start_time = int(time.time()) - 1800
-        payload = f"api_key={self._api_key}&monitors={self._monitors}&format=json&logs=0&all_time_uptime_ratio=1&custom_uptime_ratios=1&response_times=1&response_times_average=5&response_times_start_date={start_time}"
+        payload = f"api_key={self._api_key}&monitors={self._device_id}&format=json&logs=0&all_time_uptime_ratio=1&custom_uptime_ratios=1&response_times=1&response_times_average=5&response_times_start_date={start_time}"
         headers = {
             "content-type": "application/x-www-form-urlencoded",
             "cache-control": "no-cache",
