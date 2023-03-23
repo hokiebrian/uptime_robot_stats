@@ -16,4 +16,3 @@ async def async_unload_entry(hass, entry):
     """Unload the uptime_robot component."""
     await hass.config_entries.async_forward_entry_unload(entry, "sensor")
     return True
-
