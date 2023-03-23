@@ -65,8 +65,8 @@ class UptimeRobotSensor(SensorEntity):
         }
 
         async with aiohttp.ClientSession(headers=headers) as session:
-            async with session.post(BASE_URL, data=payload, timeout=30) as response:
-                if response.status != 200:
+            async with session.post(BASE_URL, data=payload, timeout=9) as response:
+                if "response_times" not in data["monitors"][0]:
                     self._state = float(0)
                     self._extra_attributes = {
                         "response_time": float(0),
