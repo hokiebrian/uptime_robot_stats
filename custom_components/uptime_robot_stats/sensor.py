@@ -18,7 +18,7 @@ BASE_URL = "https://api.uptimerobot.com/v2/getMonitors"
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up the Uptime Robot sensor from a config entry."""
     api_key = config_entry.data[CONF_API_KEY]
-    monitors = config_entry.data[CONF_ID]
+    id = config_entry.data[CONF_ID]
     sensor = UptimeRobotSensor(api_key, id)
     async_add_entities([sensor], True)
 
