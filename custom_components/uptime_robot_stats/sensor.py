@@ -39,7 +39,7 @@ class UptimeRobotSensor(SensorEntity):
     @property
     def name(self) -> str:
         """Return the name of the sensor."""
-        return "Uptime Robot " + self._id
+        return "Uptime Robot " + str(self._id)
 
     @property
     def state(self) -> Optional[float]:
@@ -48,7 +48,7 @@ class UptimeRobotSensor(SensorEntity):
 
     @property
     def unique_id(self):
-        return "uptime" + self._id
+        return "uptime" + str(self._id)
 
     @property
     def extra_state_attributes(self) -> Optional[Dict[str, Any]]:
