@@ -1,6 +1,6 @@
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.const import CONF_API_KEY, CONF_DEVICE_ID
+#from homeassistant.const import CONF_API_KEY, CONF_DEVICE_ID
 import homeassistant.helpers.config_validation as cv
 
 from . import DOMAIN
@@ -20,8 +20,8 @@ class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=vol.Schema(
                 {
-                    vol.Required(CONF_API_KEY): str,
-                    vol.Required(CONF_DEVICE_ID): str,
+                    vol.Required("api_key"): str,
+                    vol.Required("monitors"): str,
                 }
             ),
             errors=errors,
