@@ -66,6 +66,8 @@ class UptimeRobotSensor(SensorEntity):
 
         async with aiohttp.ClientSession(headers=headers) as session:
             async with session.post(BASE_URL, data=payload, timeout=9) as response:
+                data = await response.json()
+
                 if "response_times" not in data["monitors"][0]:
                     self._state = float(0)
                     self._extra_attributes = {
@@ -76,7 +78,6 @@ class UptimeRobotSensor(SensorEntity):
                     }
                     return
 
-                data = await response.json()
                 self._state = float(data["monitors"][0]["response_times"][0]["value"])
                 self._extra_attributes = {
                     "response_time": float(data["monitors"][0]["response_times"][0]["value"]),
