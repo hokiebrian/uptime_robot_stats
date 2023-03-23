@@ -5,7 +5,7 @@
                 "description": "Enter your Uptime Robot API Key and Monitor ID",
                 "data": {
                     "api_key": "Uptime Robot API Key",
-                    "device_id": "Uptime Robot Monitor ID"
+                    "monitors": "Uptime Robot Monitor ID"
                 }
             }
         }
