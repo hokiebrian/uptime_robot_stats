@@ -26,3 +26,4 @@ class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             ),
             errors=errors,
         )
+
