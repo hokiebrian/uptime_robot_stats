@@ -20,8 +20,8 @@ class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=vol.Schema(
                 {
-                    vol.Required(CONF_API_KEY): str,
-                    vol.Required(CONF_DEVICE_ID): str,
+                    vol.Required("api_key"): str,
+                    vol.Required("monitors"): str,
                 }
             ),
             errors=errors,
