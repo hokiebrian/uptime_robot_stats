@@ -13,7 +13,7 @@ class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             return self.async_create_entry(
-                title=user_input[CONF_DEVICE_ID],
+                title=user_input[monitors],
                 data=user_input,
         )
         return self.async_show_form(
