@@ -13,7 +13,7 @@ class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             return self.async_create_entry(
-                title=user_input[CONF_DEVICE_ID],
+                title=user_input["id"],
                 data=user_input,
         )
         return self.async_show_form(
@@ -21,7 +21,7 @@ class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=vol.Schema(
                 {
                     vol.Required("api_key"): str,
-                    vol.Required("monitors"): str,
+                    vol.Required("id"): str,
                 }
             ),
             errors=errors,
