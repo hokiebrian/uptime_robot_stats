@@ -1,10 +1,11 @@
-from datetime import timedelta, date
+"""The Uptime Robot sensor """
+from datetime import timedelta
 import time
-import json
-import aiohttp
 import asyncio
 
 from typing import Any, Dict, Optional
+
+import aiohttp
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity, SensorStateClass, SensorDeviceClass
 from homeassistant.const import CONF_API_KEY, CONF_ID
@@ -66,7 +67,7 @@ class UptimeRobotSensor(SensorEntity):
 
         async with aiohttp.ClientSession(headers=headers) as session:
             try:
-                async with session.post(BASE_URL, data=payload, timeout=30) as response:
+                async with session.post(BASE_URL, data=payload, timeout=8) as response:
                     if response.status != 200:
                         self._state = float(0)
                         self._extra_attributes = {
@@ -86,10 +87,10 @@ class UptimeRobotSensor(SensorEntity):
                         "uptime_percent_all_time": float(data["monitors"][0]["all_time_uptime_ratio"]),
                     }
             except:
-                    self._state = float(0)
-                    self._extra_attributes = {
-                        "response_time": float(0),
-                        "response_avg": float(0),
-                        "uptime_percent_24h": float(100),
-                        "uptime_percent_all_time": float(100),
-                    }
+                self._state = float(0)
+                self._extra_attributes = {
+                    "response_time": float(0),
+                    "response_avg": float(0),
+                    "uptime_percent_24h": float(100),
+                    "uptime_percent_all_time": float(100),
+                }
