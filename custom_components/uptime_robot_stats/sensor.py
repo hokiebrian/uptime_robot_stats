@@ -59,7 +59,7 @@ class UptimeRobotSensor(SensorEntity):
     async def async_update(self) -> None:
         """Fetch new state data for the sensor."""
         start_time = int(time.time()) - 1800
-        payload = f"api_key={self._api_key}&monitors={self.__monitor_id}&format=json&logs=0&all_time_uptime_ratio=1&custom_uptime_ratios=1&response_times=1&response_times_average=5&response_times_start_date={start_time}"
+        payload = f"api_key={self._api_key}&monitors={self._monitor_id}&format=json&logs=0&all_time_uptime_ratio=1&custom_uptime_ratios=1&response_times=1&response_times_average=5&response_times_start_date={start_time}"
         headers = {
             "content-type": "application/x-www-form-urlencoded",
             "cache-control": "no-cache",
