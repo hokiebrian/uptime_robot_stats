@@ -69,7 +69,7 @@ class UptimeRobotSensor(SensorEntity):
             try:
                 async with session.post(BASE_URL, data=payload, timeout=8) as response:
                     if response.status != 200:
-                        self._state = float(0)
+                        self._state = None
                         self._extra_attributes = {
                             "response_time": float(0),
                             "response_avg": float(0),
@@ -87,7 +87,7 @@ class UptimeRobotSensor(SensorEntity):
                         "uptime_percent_all_time": float(data["monitors"][0]["all_time_uptime_ratio"]),
                     }
             except:
-                self._state = float(0)
+                self._state = None
                 self._extra_attributes = {
                     "response_time": float(0),
                     "response_avg": float(0),
