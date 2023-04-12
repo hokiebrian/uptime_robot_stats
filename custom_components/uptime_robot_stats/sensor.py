@@ -1,16 +1,13 @@
 """The Uptime Robot sensor """
 from datetime import timedelta
-import time
-import asyncio
-
-from typing import Any, Dict, Optional
-
 import aiohttp
+import asyncio
+import time
+from typing import Any, Dict, Optional
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity, SensorStateClass, SensorDeviceClass
 from homeassistant.const import CONF_API_KEY, CONF_ID
 import homeassistant.helpers.config_validation as cv
-import voluptuous as vol
 
 SCAN_INTERVAL = timedelta(seconds=120)
 
@@ -40,7 +37,7 @@ class UptimeRobotSensor(SensorEntity):
     @property
     def name(self) -> str:
         """Return the name of the sensor."""
-        return "Uptime Robot " + str(self._monitor_id)
+        return f"Uptime Robot {str(self._monitor_id)}"
 
     @property
     def state(self) -> Optional[float]:
@@ -49,7 +46,7 @@ class UptimeRobotSensor(SensorEntity):
 
     @property
     def unique_id(self):
-        return "uptime" + str(self._monitor_id)
+        return f"uptime{str(self._monitor_id)}"
 
     @property
     def extra_state_attributes(self) -> Optional[Dict[str, Any]]:
@@ -86,7 +83,7 @@ class UptimeRobotSensor(SensorEntity):
                         "uptime_percent_24h": float(data["monitors"][0]["custom_uptime_ratio"]),
                         "uptime_percent_all_time": float(data["monitors"][0]["all_time_uptime_ratio"]),
                     }
-            except:
+            except (ValueError, KeyError):
                 self._state = None
                 self._extra_attributes = {
                     "response_time": float(0),
