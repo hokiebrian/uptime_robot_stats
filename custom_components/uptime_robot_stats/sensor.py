@@ -3,15 +3,17 @@ from datetime import timedelta
 import aiohttp
 import asyncio
 import time
+import logging
 from typing import Any, Dict, Optional
+from .const import BASE_URL
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity, SensorStateClass, SensorDeviceClass
 from homeassistant.const import CONF_API_KEY, CONF_ID
 import homeassistant.helpers.config_validation as cv
 
-SCAN_INTERVAL = timedelta(seconds=120)
+SCAN_INTERVAL = timedelta(seconds=60)
 
-BASE_URL = "https://api.uptimerobot.com/v2/getMonitors"
+_LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up the Uptime Robot sensor from a config entry."""
@@ -64,7 +66,7 @@ class UptimeRobotSensor(SensorEntity):
 
         async with aiohttp.ClientSession(headers=headers) as session:
             try:
-                async with session.post(BASE_URL, data=payload, timeout=8) as response:
+                async with session.post(BASE_URL, data=payload, timeout=10) as response:
                     if response.status != 200:
                         self._state = None
                         self._extra_attributes = {
@@ -83,11 +85,6 @@ class UptimeRobotSensor(SensorEntity):
                         "uptime_percent_24h": float(data["monitors"][0]["custom_uptime_ratio"]),
                         "uptime_percent_all_time": float(data["monitors"][0]["all_time_uptime_ratio"]),
                     }
-            except (ValueError, KeyError):
-                self._state = None
-                self._extra_attributes = {
-                    "response_time": float(0),
-                    "response_avg": float(0),
-                    "uptime_percent_24h": float(100),
-                    "uptime_percent_all_time": float(100),
-                }
+            except (ValueError, KeyError, asyncio.exceptions.TimeoutError):
+                _LOGGER.error("Error occurred while updating sensor.")
+                return
