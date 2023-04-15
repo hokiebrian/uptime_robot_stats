@@ -1,10 +1,7 @@
 import voluptuous as vol
 import aiohttp
 from homeassistant import config_entries
-from homeassistant.const import CONF_API_KEY, CONF_ID
-import homeassistant.helpers.config_validation as cv
-
-from . import DOMAIN
+from .const import DOMAIN
 
 class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Uptime Robot configuration flow."""
@@ -59,4 +56,3 @@ class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             ),
             errors=errors,
         )
-

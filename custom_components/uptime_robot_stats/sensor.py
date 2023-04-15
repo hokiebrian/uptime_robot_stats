@@ -1,21 +1,17 @@
 """The Uptime Robot sensor """
 from datetime import timedelta
-import aiohttp
 import asyncio
 import time
 import logging
+import aiohttp
 from typing import Any, Dict, Optional
+from homeassistant.core import HomeAssistant
+from homeassistant.components.sensor import SensorEntity, SensorStateClass
 from .const import BASE_URL
-
-from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity, SensorStateClass, SensorDeviceClass
-from homeassistant.const import CONF_API_KEY, CONF_ID
-import homeassistant.helpers.config_validation as cv
 
 SCAN_INTERVAL = timedelta(seconds=60)
 
-_LOGGER = logging.getLogger(__name__)
-
-async def async_setup_entry(hass, config_entry, async_add_entities):
+async def async_setup_entry(hass: HomeAssistant, config_entry, async_add_entities):
     """Set up the Uptime Robot sensor from a config entry."""
     api_key = config_entry.data["api_key"]
     monitor_id = config_entry.data["monitor_id"]
@@ -28,9 +24,11 @@ class UptimeRobotSensor(SensorEntity):
     _attr_icon = "mdi:clock"
     _attr_native_unit_of_measurement = "ms"
     _attr_state_class: SensorStateClass = SensorStateClass.MEASUREMENT
+    _LOGGER = logging.getLogger(__name__)
 
     def __init__(self, api_key: str, monitor_id: str) -> None:
         """Initialize the sensor."""
+        self._LOGGER = logging.getLogger(__name__)
         self._api_key = api_key
         self._monitor_id = monitor_id
         self._state: Optional[float] = None
