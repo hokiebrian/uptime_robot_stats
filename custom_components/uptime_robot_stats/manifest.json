@@ -1,10 +1,12 @@
 {
     "domain": "uptime_robot_stats",
     "name": "Uptime Robot Monitor Stats",
-    "config_flow": true,
-    "documentation": "https://github.com/hokiebrian/uptime_robot_stats",
-    "requirements": [],
-    "dependencies": [],
     "codeowners": ["@hokiebrian"],
-    "version": "0.6.0"
+    "config_flow": true,
+    "dependencies": [],
+    "documentation": "https://github.com/hokiebrian/uptime_robot_stats",
+    "iot_class":  "cloud_polling",
+    "issue_tracker": "https://github.com/hokiebrian/uptime_robot_stats/issues",
+    "requirements": [],
+    "version": "0.6.1"
   }

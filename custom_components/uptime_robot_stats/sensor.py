@@ -64,7 +64,7 @@ class UptimeRobotSensor(SensorEntity):
 
         async with aiohttp.ClientSession(headers=headers) as session:
             try:
-                async with session.post(BASE_URL, data=payload, timeout=10) as response:
+                async with session.post(BASE_URL, data=payload, timeout=8) as response:
                     if response.status != 200:
                         self._state = None
                         self._extra_attributes = {
@@ -83,6 +83,6 @@ class UptimeRobotSensor(SensorEntity):
                         "uptime_percent_24h": float(data["monitors"][0]["custom_uptime_ratio"]),
                         "uptime_percent_all_time": float(data["monitors"][0]["all_time_uptime_ratio"]),
                     }
-            except (ValueError, KeyError, asyncio.exceptions.TimeoutError):
+            except (ValueError, KeyError, IndexError, asyncio.exceptions.TimeoutError):
                 _LOGGER.error("Error occurred while updating sensor.")
                 return
