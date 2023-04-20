@@ -77,16 +77,20 @@ class UptimeRobotSensor(SensorEntity):
 
                     data = await response.json()
                     try:
-                        self._state = float(data["monitors"][0]["response_times"][0]["value"])
-                        self._extra_attributes = {
-                            "response_time": float(data["monitors"][0]["response_times"][0]["value"]),
-                            "response_avg": float(data["monitors"][0]["average_response_time"]),
-                            "uptime_percent_24h": float(data["monitors"][0]["custom_uptime_ratio"]),
-                            "uptime_percent_all_time": float(data["monitors"][0]["all_time_uptime_ratio"]),
-                        }
+                        monitors = data.get("monitors", [])
+                        if len(monitors) > 0:
+                            response_times = monitors[0].get("response_times", [])
+                            if len(response_times) > 0:
+                                self._state = float(response_times[0].get("value", 0))
+                                self._extra_attributes = {
+                                    "response_time": float(response_times[0].get("value", 0)),
+                                    "response_avg": float(monitors[0].get("average_response_time", 0)),
+                                    "uptime_percent_24h": float(monitors[0].get("custom_uptime_ratio", 0)),
+                                    "uptime_percent_all_time": float(monitors[0].get("all_time_uptime_ratio", 0)),
+                                }
                     except(IndexError):
-                        _LOGGER.error("Error with sensor data.")
+                        UptimeRobotSensor._LOGGER.error("Error with sensor data.")
                         
             except (asyncio.exceptions.TimeoutError):
-                _LOGGER.error("Error occurred while updating sensor.")
+                UptimeRobotSensor._LOGGER.error("Error occurred while updating sensor.")
                 return
