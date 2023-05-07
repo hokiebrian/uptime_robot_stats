@@ -3,6 +3,7 @@ import aiohttp
 from homeassistant import config_entries
 from .const import DOMAIN
 
+
 class UptimeRobotConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Uptime Robot configuration flow."""
 

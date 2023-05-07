@@ -2,8 +2,10 @@
 
 from homeassistant.core import HomeAssistant
 from .const import DOMAIN
+
 CONF_API_KEY = "api_key"
 CONF_ID = "monitor_id"
+
 
 async def async_setup_entry(hass: HomeAssistant, entry):
     """Set up the uptime_robot component from a config entry."""
@@ -13,6 +15,7 @@ async def async_setup_entry(hass: HomeAssistant, entry):
         hass.config_entries.async_forward_entry_setup(entry, "sensor")
     )
     return True
+
 
 async def async_unload_entry(hass: HomeAssistant, entry):
     """Unload the uptime_robot component."""

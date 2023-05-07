@@ -11,12 +11,14 @@ from .const import BASE_URL
 
 SCAN_INTERVAL = timedelta(seconds=60)
 
+
 async def async_setup_entry(hass: HomeAssistant, config_entry, async_add_entities):
     """Set up the Uptime Robot sensor from a config entry."""
     api_key = config_entry.data["api_key"]
     monitor_id = config_entry.data["monitor_id"]
     sensor = UptimeRobotSensor(api_key, monitor_id)
     async_add_entities([sensor], True)
+
 
 class UptimeRobotSensor(SensorEntity):
     """Representation of an Uptime Robot sensor."""
@@ -83,14 +85,22 @@ class UptimeRobotSensor(SensorEntity):
                             if len(response_times) > 0:
                                 self._state = float(response_times[0].get("value", 0))
                                 self._extra_attributes = {
-                                    "response_time": float(response_times[0].get("value", 0)),
-                                    "response_avg": float(monitors[0].get("average_response_time", 0)),
-                                    "uptime_percent_24h": float(monitors[0].get("custom_uptime_ratio", 0)),
-                                    "uptime_percent_all_time": float(monitors[0].get("all_time_uptime_ratio", 0)),
+                                    "response_time": float(
+                                        response_times[0].get("value", 0)
+                                    ),
+                                    "response_avg": float(
+                                        monitors[0].get("average_response_time", 0)
+                                    ),
+                                    "uptime_percent_24h": float(
+                                        monitors[0].get("custom_uptime_ratio", 0)
+                                    ),
+                                    "uptime_percent_all_time": float(
+                                        monitors[0].get("all_time_uptime_ratio", 0)
+                                    ),
                                 }
-                    except(IndexError):
+                    except IndexError:
                         UptimeRobotSensor._LOGGER.error("Error with sensor data.")
-                        
-            except (asyncio.exceptions.TimeoutError):
+
+            except asyncio.exceptions.TimeoutError:
                 UptimeRobotSensor._LOGGER.error("Error occurred while updating sensor.")
                 return
