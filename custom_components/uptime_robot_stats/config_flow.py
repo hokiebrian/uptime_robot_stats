@@ -1,4 +1,5 @@
 """ Config Flow for Uptime Robot Monitor Component """
+
 import voluptuous as vol
 import aiohttp
 from homeassistant import config_entries
