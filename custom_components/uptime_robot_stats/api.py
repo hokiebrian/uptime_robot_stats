@@ -5,7 +5,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import time
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import aiohttp
 import async_timeout
@@ -85,20 +85,20 @@ class UptimeRobotClient:
 
         monitor = monitors[0]
         response_times = monitor.get("response_times") or []
-        latest_response_value = None
-        if response_times:
-            latest_response_value = response_times[0].get("value")
 
-        if latest_response_value is not None:
-            state = float(latest_response_value)
-        else:
-            state = None
+        state = self._extract_latest_response_time(response_times)
+        if state is None:
+            fallback_avg = self._to_float(monitor.get("average_response_time"))
+            if fallback_avg is not None and fallback_avg > 0:
+                state = fallback_avg
 
         attributes = {
-            "response_time": float(latest_response_value or 0),
-            "response_avg": float(monitor.get("average_response_time", 0)),
-            "uptime_percent_24h": float(monitor.get("custom_uptime_ratio", 0)),
-            "uptime_percent_all_time": float(monitor.get("all_time_uptime_ratio", 0)),
+            "response_time": self._first_response_value(response_times),
+            "response_avg": self._to_float(monitor.get("average_response_time")),
+            "uptime_percent_24h": self._to_float(monitor.get("custom_uptime_ratio")),
+            "uptime_percent_all_time": self._to_float(
+                monitor.get("all_time_uptime_ratio")
+            ),
         }
 
         return {
@@ -106,3 +106,42 @@ class UptimeRobotClient:
             "attributes": attributes,
             "raw": monitor,
         }
+
+    def _extract_latest_response_time(
+        self, response_times: list[Dict[str, Any]]
+    ) -> Optional[float]:
+        """Return the most recent non-zero response time from the API payload."""
+        if not response_times:
+            return None
+
+        for point in response_times:
+            value = self._to_float(point.get("value"))
+            if value is not None and value > 0:
+                return value
+
+        for point in response_times:
+            value = self._to_float(point.get("value"))
+            if value is not None:
+                return value
+
+        return None
+
+    def _first_response_value(
+        self, response_times: list[Dict[str, Any]]
+    ) -> Optional[float]:
+        """Return the raw first response time value from the API, if present."""
+        if not response_times:
+            return None
+
+        return self._to_float(response_times[0].get("value"))
+
+    @staticmethod
+    def _to_float(value: Any) -> Optional[float]:
+        """Safely coerce API values to float."""
+        if value is None or value == "":
+            return None
+
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return None
