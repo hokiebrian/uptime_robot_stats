@@ -48,8 +48,21 @@ class UptimeRobotSensor(CoordinatorEntity, SensorEntity):
     @property
     def native_value(self) -> Optional[float]:
         """Return the current response time returned by the API."""
-        state = self.coordinator.data.get("state") if self.coordinator.data else None
-        return state
+        if not self.coordinator.data:
+            return None
+
+        state = self.coordinator.data.get("state")
+        if state is not None:
+            return float(state)
+
+        response_time = self.coordinator.data.get("attributes", {}).get("response_time")
+        if response_time is None:
+            return None
+
+        try:
+            return float(response_time)
+        except (TypeError, ValueError):
+            return None
 
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
