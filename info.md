@@ -20,3 +20,10 @@ This provides statistics for a single Uptime Robot Monitor. You will need an API
 7) Click `Add Integration` and search for `Uptime Robot Monitor Stats`
 8) Configure the integration by copying your API Key on the top line and your Monitor ID on the bottom line when prompted
 9) The Instance will be named after your monitor ID
+
+## Changelog
+
+### 1.1.0b0 (pre-release)
+- Adoption of Home Assistant's DataUpdateCoordinator for coordinated polling and improved retry behaviour.
+- Shared API client introduces structured error messages and consistent request timeouts.
+- Config flow validation now logs failures and keeps a single HTTP session open for checks.
